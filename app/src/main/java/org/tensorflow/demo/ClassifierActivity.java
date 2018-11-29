@@ -24,6 +24,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.Display;
@@ -34,6 +35,8 @@ import org.tensorflow.demo.env.BorderedText;
 import org.tensorflow.demo.env.ImageUtils;
 import org.tensorflow.demo.env.Logger;
 import org.tensorflow.demo.R; // Explicit import needed for internal Google builds.
+
+import static android.content.ContentValues.TAG;
 
 public class ClassifierActivity extends CameraActivity implements OnImageAvailableListener {
   private static final Logger LOGGER = new Logger();
@@ -165,15 +168,25 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
         new Runnable() {
           @Override
           public void run() {
+//            Log.d(TAG, "hahahaha");
             final long startTime = SystemClock.uptimeMillis();
             final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap); // 사물 인식
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
             LOGGER.i("Detect: %s", results);
-            cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
+            cropCopyBitmap = Bitmap.createBitmap(croppedBitmap); // 여기에 필터를 붙이면 되지 않을까?
             if (resultsView == null) {
               resultsView = (ResultsView) findViewById(R.id.results);
             }
+
             resultsView.setResults(results);
+
+            if(!results.isEmpty()) {
+              if(results.get(0).getTitle().equals("coffee mug")) {
+                Log.d(TAG, "run: 발견");
+                
+              }
+            }
+
             requestRender();
             readyForNextImage();
           }
