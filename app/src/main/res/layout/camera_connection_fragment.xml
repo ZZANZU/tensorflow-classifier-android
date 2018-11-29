@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
+    <!--인식 결과-->
     <org.tensorflow.demo.RecognitionScoreView
         android:id="@+id/results"
         android:layout_width="match_parent"

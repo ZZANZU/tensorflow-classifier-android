@@ -166,7 +166,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
           @Override
           public void run() {
             final long startTime = SystemClock.uptimeMillis();
-            final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
+            final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap); // 사물 인식
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
             LOGGER.i("Detect: %s", results);
             cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
